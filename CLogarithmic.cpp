@@ -112,6 +112,5 @@ void Logarithmic::Reset(){
 
 ///@brief data dump
 void Logarithmic::Dump(){
-	cout<<"Dump of Logarithmic"<<endl;
 	cout << k_coeff << "log" << b_coeff << "(x)"<< endl << flush;
 }

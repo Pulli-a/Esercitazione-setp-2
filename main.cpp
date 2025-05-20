@@ -16,10 +16,11 @@ bool insertFunction(vector<Function *> &f);
 bool printFunctionList(vector<Function *> &f);
 bool eraseFunction(vector<Function *> &f);
 bool eraseAllFunctions(vector<Function *> &f);
+bool selectFuncion(vector<Function *> &f);
 
 int safeInsertion(int low, int high);
 int insertFunctionMenu();
-bool insertLog(vector<Function *> f);
+bool insertLog(vector<Function *> &f);
 
 
 /// TODO: implement funcitons
@@ -71,7 +72,7 @@ int main(){
 			break;
 
 		case 5:
-			///TODO: Seleziona una funzione 
+			selectFuncion(F);
 			break;
 		default:
 			cout << "[ ERROR ] invalid mode value: " << mode << endl;
@@ -167,6 +168,7 @@ int safeInsertion(int low, int high){
 bool printFunctionList(vector<Function *> &f){
 	int size = f.size();
 	cout << "### Function vector ###" << endl;
+	cout << size << endl;
 	if(f.empty()){
 		cout << "[ INFO ] vector is empty " << endl;
 		return false;
@@ -195,16 +197,19 @@ bool eraseFunction(vector<Function *> &f){
 
 
 bool eraseAllFunctions(vector<Function *> &f){
+	cout << "[ INFO ] Erasing all functions in list" << endl;
 	if(!f.empty()){
 		while(!f.empty()){
 			delete f[f.size()-1];
 			f.erase(f.end());
 		}
 	}
+	///TODO: metti messaggi più belli
+	cout << "[ INFO ] success" << endl;
 	return true;
 }
 
-bool insertLog(vector<Function *> f){
+bool insertLog(vector<Function *> &f){
 	int b;
 	int k;
 	Logarithmic* l;
@@ -222,7 +227,8 @@ bool insertLog(vector<Function *> f){
 	cout<<"insert k coefficent"<<endl;
 	cin>>k;
 	l->SetLogarithmic(b, k);
-	f.push_back(l);
+	Function* func = l;
+	f.push_back(func);
 	return true;
 }
 
@@ -237,3 +243,34 @@ int insertFunctionMenu(){
 	return safeInsertion(0, 4);
 }
 
+
+bool selectFuncion(vector<Function *> &f){
+	int select_index = 0;
+	int mode = 0;
+	double x;
+	int max_index = f.size();
+	if(!printFunctionList(f)){
+		return false;
+	}
+	if((select_index = safeInsertion(0, max_index-1)) == -1 ) return false;
+	while(1){
+		cout << "### function selected ###" << endl;
+		f[select_index]->Dump();
+		cout << "0 - exit evaluation" << endl;
+		cout << "1 - evaluate funciton" << endl;
+		if((mode = safeInsertion(0 , 1)) == -1 ) return false;
+		cout << "###   ###" << endl;
+		switch(mode)
+		{
+		case 0:
+			return true;
+
+		case 1:
+			cout << "insert evaluation point (x = )" << endl;
+			cin >> x;
+			cout << "f("<< x << ") = " << f[select_index]->GetValue(x) << endl;
+			break;
+		}
+	}
+	return true;
+}

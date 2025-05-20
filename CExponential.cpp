@@ -133,6 +133,5 @@ void Exponential::Reset(){
 
 /// @brief print all params
 void Exponential::Dump(){
-	cout << "Dump of Exponential" << endl;
 	cout << k_coeff << "*" << b_coeff << "^(" << c_coeff << " x)" << endl;
 }

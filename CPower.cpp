@@ -111,6 +111,5 @@ void Power::Reset(){
 
 /// @brief print all params
 void Power::Dump(){
-	cout << "Dump of Power" << endl;
 	cout << k_coeff << "x^" << e_coeff << endl;
 }
