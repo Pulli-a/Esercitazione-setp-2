@@ -112,6 +112,8 @@ function indexes
 
 */
 
+///@brief this function calls the function menu and selects the correct insert function to calloc
+///@returns true if successful or false if fails.
 bool insertFunction(vector<Function *> &f){
 	int mode = 0;
 	double coeff = 0;
@@ -126,8 +128,7 @@ bool insertFunction(vector<Function *> &f){
 		break;
 
 	case 2:
-		cout << "TODO: insert func HERE!!!" << endl;
-		//insertPoly(f);
+		insertPoly(f);
 		break;
 
 	case 3:
@@ -145,7 +146,8 @@ bool insertFunction(vector<Function *> &f){
 }
 
 
-
+///@brief prints list of existing function objects
+///@returns true if printed successfully or false if array is empty
 bool printFunctionList(vector<Function *> &f){
 	int size = f.size();
 	cout << "### Function vector ###" << endl;
@@ -162,7 +164,8 @@ bool printFunctionList(vector<Function *> &f){
 	}
 	return true;
 }
-
+///@brief deletes a specific function from the array
+///@returns true if deleted successfully or false if failed. 
 bool eraseFunction(vector<Function *> &f){
 	int erase_index = 0;
 	int max_index = f.size();
@@ -176,7 +179,8 @@ bool eraseFunction(vector<Function *> &f){
 	return true;
 }
 
-
+///@brief deletes all objects from the array
+///@returns true if deleted successfully or false if failed. 
 bool eraseAllFunctions(vector<Function *> &f){
 	cout << "[ INFO ] Erasing all functions in list" << endl;
 	if(!f.empty()){
@@ -190,7 +194,9 @@ bool eraseAllFunctions(vector<Function *> &f){
 	return true;
 }
 
-
+///@brief logarithmic function creator
+///@param f pointer to object array
+///@returns true if successful
 bool insertLog(vector<Function *> &f){
 	double b;
 	double k;
@@ -213,7 +219,8 @@ bool insertLog(vector<Function *> &f){
 	f.push_back(func);
 	return true;
 }
-
+///@brief prints menu to select function to create
+///@returns selection 
 int insertFunctionMenu(){
 	int select;
 	cout<<"### function creation wizard ###"<< endl;
@@ -225,7 +232,8 @@ int insertFunctionMenu(){
 	return safeInsertion(0, 4);
 }
 
-
+///@brief allows the user to pick a specific function from the object array
+///@returns true if successful or false if fails
 bool selectFuncion(vector<Function *> &f){
 	int select_index = 0;
 	int mode = 0;
