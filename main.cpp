@@ -10,16 +10,21 @@ using namespace std;
 
 int menu();
 bool insertFunction(vector<Function *> &f);
+
 bool printFunctionList(vector<Function *> &f);
 bool eraseFunction(vector<Function *> &f);
 bool eraseAllFunctions(vector<Function *> &f);
 
-/// TODO: implement funcitons
+int safeInsertion(int low, int high);
 int insertFunctionMenu();
-bool InsertLog(vector<Function *> &f);
-bool InsertPoly(vector<Function *> &f);
-bool InsertPow(vector<Function *> &f);
-bool InsertExp(vector<Function *> &f);
+bool insertLog(vector<Function *> f);
+
+
+/// TODO: implement funcitons
+
+bool insertPoly(vector<Function *> &f);
+bool insertPow(vector<Function *> &f);
+bool insertExp(vector<Function *> &f);
 
 
 /*
@@ -83,18 +88,18 @@ int main(){
 int menu(){
 	int mode = 0;
 	int try_num = 0;
-	while(1){
-		///TODO: clear the screen and put menu on top using weird printf
-		cout << "### main menu ###" << endl;
-		cout << "insert selection and press enter" << endl;
-		cout << "0 - Exit menu  and program" << endl;
-		cout << "1 - visualize function vector" << endl;
-		cout << "2 - Insert a function" << endl;
-		cout << "3 - Erase a function" << endl;
-		cout << "4 - Erase all function" << endl;
-		cout << "5 - Select a function" << endl;
-		if((mode = safeInsertion(0 , 5)) == -1) return -1;
-	}
+
+	///TODO: clear the screen and put menu on top using weird printf
+	cout << "### main menu ###" << endl;
+	cout << "insert selection and press enter" << endl;
+	cout << "0 - Exit menu  and program" << endl;
+	cout << "1 - visualize function vector" << endl;
+	cout << "2 - Insert a function" << endl;
+	cout << "3 - Erase a function" << endl;
+	cout << "4 - Erase all function" << endl;
+	cout << "5 - Select a function" << endl;
+	if((mode = safeInsertion(0 , 5)) == -1) return -1;
+
 	return mode;
 }
 
@@ -120,25 +125,25 @@ bool insertFunction(vector<Function *> &f){
 		return true;
 		break;
 	case 1:
-		InsertLog(f);
+		insertLog(f);
 		break;
 
 	case 2:
-		InsertPoly(f);
+		//insertPoly(f);
 		break;
 
 	case 3:
-		InsertPow(f);
+		//insertPow(f);
 		break;
 	
 	case 4:
-		InsertExp(f);
+		//insertExp(f);
 		break;
 	
 	default:
 		break;
 	}
-	
+	return true;	
 }
 
 int safeInsertion(int low, int high){
@@ -197,5 +202,39 @@ bool eraseAllFunctions(vector<Function *> &f){
 			f.erase(f.end());
 		}
 	}
+	return true;
+}
+
+bool insertLog(vector<Function *> f){
+	int b;
+	int k;
+	Logarithmic* l;
+	l = new Logarithmic;
+	cout<<"logarithmic function creation wizard"<<endl;
+	while(1){
+		cout<<"insert base coefficent /nbase coefficent must be > 0 and not 1"<<endl;
+		cin>>b;
+		if(b > 0 && b != 1){
+			break;
+		}else{
+			cout<<"[ ERROR ] invalid b coefficent value"<<endl;
+		}
+	}
+	cout<<"insert k coefficent"<<endl;
+	cin>>k;
+	l->SetLogarithmic(b, k);
+	f.push_back(l);
+	return true;
+}
+
+int insertFunctionMenu(){
+	int select;
+	cout<<"### function creation wizard ###"<< endl;
+	cout<<"0 - return to main menu"<<endl;
+	cout<<"1 - create logarithmic function"<<endl;
+	cout<<"2 - create polynomial function"<<endl;
+	cout<<"3 - create power function"<<endl;
+	cout<<"4 - create exponential function"<<endl;
+	return safeInsertion(0, 4);
 }
 
