@@ -3,6 +3,7 @@
 ///TODO: add doxygen comments to safeInsert.cpp
 ///TODO: add try_count to safeInsert(range) and (cond) for both int and double
 ///TODO: polish code and program
+///TODO: non so se mi piace l'aggiunta dei coeff ad ogni inserimento
 
 #include "CPolynomial.h"
 #include "CExponential.h"
@@ -48,10 +49,17 @@ bool insertLog(vector<Function *> &f);
 /// @brief entry point of program
 /// @return 0 or non zero value if errors 
 int main(){
-	//initializing dinamic array
-	vector<Function *> F;
 
+	vector<Function *> F;
 	int mode = 0;
+	///TODO: scrivi una spiegazione migliore, sono stanco
+	printf("\e[1;1H\e[2J");
+	cout << "This program allows you to handle different function via a list." << endl;
+	cout << "you can add function to list, print current list, erase a function or all functions or select a function," << endl;
+	cout << "when a function is selected you can evaluate it at some points [doing f(x) = ]." << endl;
+	cout << "initially the list will be empty so you should start by adding a function to the list." << endl;
+	cout << "(press enter to start the program)" << endl;
+	getchar();
 
 	while(1){
 		if((mode = menu()) == -1) return 1;
@@ -95,7 +103,6 @@ int main(){
 /// @return returns the  mode, integer from 0 to 5
 int menu(){
 	int mode = 0;
-	int try_num = 0;
 	printf("\e[1;1H\e[2J");
 	cout << "### main menu ###" << endl;
 	cout << "insert selection and press enter" << endl;
@@ -110,17 +117,6 @@ int menu(){
 	return mode;
 }
 
-
-/*
-
-function indexes
-0 exit
-1 log
-2 poly
-3 pow
-4 exp
-
-*/
 
 ///@brief allow to insert function to funciton pointer array f
 ///@param f reference of pointers to class Functionion 
@@ -219,7 +215,11 @@ bool insertLog(vector<Function *> &f){
 	Logarithmic* l;
 	l = new Logarithmic;
 	printf("\e[1;1H\e[2J");
-	cout<<"### logarithmic function creation wizard ###"<<endl;
+	cout <<"### logarithmic function creation wizard ###"<< endl << endl;
+	cout << "Logarithmic has the form: k * logb(x)" << endl << endl;
+	cout<<"insert k coefficent"<<endl;
+	safeInsert(k);
+	cout << " Log: "<< k << " * logb(x)" << endl;
 	while(1){
 		cout<<"insert base coefficent \nbase coefficent must be > 0 and not 1"<<endl;
 		safeInsert(b, 0 ,GT);
@@ -229,8 +229,7 @@ bool insertLog(vector<Function *> &f){
 			cout<<"[ ERROR ] b coefficent should be not equal to 1"<< endl;
 		}
 	}
-	cout<<"insert k coefficent"<<endl;
-	safeInsert(k);
+	cout << k << " * log"<< b <<"(x)" << endl;
 	l->SetLogarithmic(b, k);
 	Function* func = l;
 	f.push_back(func);
