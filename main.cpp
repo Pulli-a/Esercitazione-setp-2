@@ -8,7 +8,6 @@
 
 using namespace std;
 
-#define MAX_ATTEMPT 10
 
 int menu();
 bool insertFunction(vector<Function *> &f);
@@ -145,29 +144,7 @@ bool insertFunction(vector<Function *> &f){
 	return true;	
 }
 
-int safeInsertion(int low, int high){
-	int mode = 0;
-	int max_try = 0;
-	while(1){
-		///TODO: per evitare di inserire diversi oggetti insieme posso mettere tutto in un buffer che poi controllo
-		///BUG: if you insert "1 2 3 4 5" it gets the '1' and continue running program, next scanf will pick the '2' ...
-		if(scanf("%d", &mode) != 1){
-			cout << "[ ERROR ] mode should be a integer" << endl << flush;
-			getchar();
-			continue;
-		}
-		else if(mode >= low && mode <= high){
-			return mode;
-		}
-		max_try++;
-		cout << "[ ERROR ] mode should be from 0 to 5" << endl;
-		///TODO: insert an instruction
-		if(max_try > MAX_ATTEMPT){
-			cout << "[ ERROR ] exceeded max menu attempts, exiting the program" << endl;
-			return -1;
-		}
-	}
-}
+
 
 bool printFunctionList(vector<Function *> &f){
 	int size = f.size();
@@ -215,8 +192,8 @@ bool eraseAllFunctions(vector<Function *> &f){
 
 
 bool insertLog(vector<Function *> &f){
-	int b;
-	int k;
+	double b;
+	double k;
 	Logarithmic* l;
 	l = new Logarithmic;
 	cout<<"logarithmic function creation wizard"<<endl;
