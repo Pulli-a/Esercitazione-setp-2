@@ -2,6 +2,7 @@
 #include "CExponential.h"
 #include "CLogarithmic.h"
 #include "Cpower.h"
+#include "insertf.h"
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,10 +11,12 @@ using namespace std;
 
 int menu();
 bool insertFunction(vector<Function *> &f);
+int safeInsertion(int low, int high);
+int insertFunctionMenu();
+bool insertLog(vector<Function *> f);
 
 /// TODO: implement funcitons
-int insertFunctionMenu();
-bool InsertLog(vector<Function *> &f);
+
 bool InsertPoly(vector<Function *> &f);
 bool InsertPow(vector<Function *> &f);
 bool InsertExp(vector<Function *> &f);
@@ -156,5 +159,35 @@ int safeInsertion(int low, int high){
 		}
 	}
 }
-
+bool insertLog(vector<Function *> f){
+	int b;
+	int k;
+	Logarithmic* l;
+	l = new Logarithmic;
+	cout<<"logarithmic function creation wizard"<<endl;
+	while(1){
+		cout<<"insert base coefficent /nbase coefficent must be > 0 and not 1"<<endl;
+		cin>>b;
+		if(b > 0 && b != 1){
+			break;
+		}else{
+			cout<<"[ ERROR ] invalid b coefficent value"<<endl;
+		}
+	}
+	cout<<"insert k coefficent"<<endl;
+	cin>>k;
+	l->SetLogarithmic(b, k);
+	f.push_back(l);
+	
+}
+int insertFunctionMenu(){
+	int select;
+	cout<<"### function creation wizard ###"<< endl;
+	cout<<"0 - return to main menu"<<endl;
+	cout<<"1 - create logarithmic function"<<endl;
+	cout<<"2 - create polynomial function"<<endl;
+	cout<<"3 - create power function"<<endl;
+	cout<<"4 - create exponential function"<<endl,
+	return safeInsertion(0, 4);
+}
 
