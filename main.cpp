@@ -2,7 +2,6 @@
 #include "CExponential.h"
 #include "CLogarithmic.h"
 #include "Cpower.h"
-#include "insertf.h"
 
 #include <bits/stdc++.h>
 using namespace std;
