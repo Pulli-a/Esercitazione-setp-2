@@ -205,8 +205,8 @@ bool eraseAllFunctions(vector<Function *> &f){
 }
 
 bool insertLog(vector<Function *> f){
-	int b;
-	int k;
+	double b;
+	double k;
 	Logarithmic* l;
 	l = new Logarithmic;
 	cout<<"logarithmic function creation wizard"<<endl;
