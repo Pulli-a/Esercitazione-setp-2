@@ -2,7 +2,30 @@
 
 
 bool insertPoly(vector<Function *> &f){
-	return false;
+	double* c;	//pointer to int array
+    int d;		//degree
+	Polynomial* p;
+	cout<<"Polynomial Function creation wizard"<<endl;
+	while(1){
+		cout<<"insert function degree"<<endl;
+		cin>>d;
+		///TODO: LEVA QUESTA MERDA E METTICI SAFE INSERT QUESTO ROMPERà IL PROGRAMMA
+		if(d < 0){
+			cout<<"[ ERROR ] degree must be at least 0"<<endl;
+		}else{
+			break;
+		}
+	}
+	c = new double[d + 1];
+	for(int i = 0; i < d +1; i++){
+		cout<<"insert coefficent of degree: "<<i<<endl;
+		///TODO: LEVA STO CIN E METTI SAFE INSERT
+		cin>>c[i];
+	}
+	
+	p = new Polynomial(c, d + 1);
+	f.push_back(p);
+	return true;
 }
 //k * x ^ e
 bool insertPow(vector<Function *> &f){
