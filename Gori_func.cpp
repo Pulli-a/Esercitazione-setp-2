@@ -1,17 +1,22 @@
+#include "Gori_func.h"
+
+
 bool insertPoly(vector<Function *> &f){
+	return false;
 }
 //k * x ^ e
 bool insertPow(vector<Function *> &f){
 	double k;
 	double e;
 	Power* p;
-	p = new Power;
+	
 	cout<<"Power Function creation wizard"<<endl;
 	cout<<"insert k coefficent"<<endl;
 	cin>>k;
 	cout<<"insert e coefficent"<<endl;
 	cin>>e;
-	p->SetPower(k, e);
+	p = new Power(k, e);
+	f.push_back(p);
 	return true;
 }
 	
@@ -20,7 +25,6 @@ bool insertExp(vector<Function *> &f){
 	double b;
 	double c;
 	Exponential* e;
-	e = new Exponential;
 	cout<<"insert k coefficent"<<endl;
 	cin>>k;
 	cout<<"insert c coefficent"<<endl;
@@ -35,7 +39,8 @@ bool insertExp(vector<Function *> &f){
 			cout<<"[ ERROR ] b coefficent must be > 0"<<endl;
 		}
 	}
-	e->SetExponential(k, b, c);
+	e = new Exponential(k, b ,c);
+	f.push_back(e);
 	return true;
 	
 }

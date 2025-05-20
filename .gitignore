@@ -6,6 +6,9 @@
 bin/
 *.exe
 
+#tests
+tests/
+
 #doxygen
 doxygen/
 
