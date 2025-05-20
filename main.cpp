@@ -10,6 +10,9 @@ using namespace std;
 
 int menu();
 bool insertFunction(vector<Function *> &f);
+bool printFunctionList(vector<Function *> &f);
+bool eraseFunction(vector<Function *> &f);
+bool eraseAllFunctions(vector<Function *> &f);
 
 /// TODO: implement funcitons
 int insertFunctionMenu();
@@ -22,7 +25,7 @@ bool InsertExp(vector<Function *> &f);
 /*
 0 – Esci dal menù 
 
-1 – Visualizza la lista delle funzioni  
+1 – Visualizza la vectora delle funzioni  
 
 2 – Inserisci una funzione  
 
@@ -48,19 +51,19 @@ int main(){
 			break;
 		
 		case 1:
-			///TODO: visualizza lista funzioni
+			printFunctionList(F);
 			break;
 
 		case 2:
-			///TODO: Inserisci una funzione 
+			insertFunction(F);
 			break;
 
 		case 3:
-			///TODO: Elimina una funzione
+			eraseFunction(F);
 			break;
 
 		case 4:
-			///TODO: Elimina tutte le funzioni 
+			eraseAllFunctions(F);
 			break;
 
 		case 5:
@@ -85,7 +88,7 @@ int menu(){
 		cout << "### main menu ###" << endl;
 		cout << "insert selection and press enter" << endl;
 		cout << "0 - Exit menu  and program" << endl;
-		cout << "1 - visualize function list" << endl;
+		cout << "1 - visualize function vector" << endl;
 		cout << "2 - Insert a function" << endl;
 		cout << "3 - Erase a function" << endl;
 		cout << "4 - Erase all function" << endl;
@@ -157,4 +160,42 @@ int safeInsertion(int low, int high){
 	}
 }
 
+bool printFunctionList(vector<Function *> &f){
+	int size = f.size();
+	cout << "### Function vector ###" << endl;
+	if(f.empty()){
+		cout << "[ INFO ] vector is empty " << endl;
+		return false;
+	}
+	else{
+		for(int i = 0; i < size; i++){
+			cout << i << ":   ";
+			f[i]->Dump();
+		}
+	}
+	return true;
+}
+
+bool eraseFunction(vector<Function *> &f){
+	int erase_index = 0;
+	int max_index = f.size();
+	if(!printFunctionList(f)){
+		return false;
+	}
+	if((erase_index = safeInsertion(0, max_index)) == -1 ) return false;
+	delete f[erase_index];
+	f.erase(f.begin() + erase_index);
+	
+	return true;
+}
+
+
+bool eraseAllFunctions(vector<Function *> &f){
+	if(!f.empty()){
+		while(!f.empty()){
+			delete f[f.size()-1];
+			f.erase(f.end());
+		}
+	}
+}
 
