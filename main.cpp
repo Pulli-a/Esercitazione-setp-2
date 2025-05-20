@@ -209,6 +209,7 @@ bool eraseAllFunctions(vector<Function *> &f){
 	return true;
 }
 
+
 bool insertLog(vector<Function *> &f){
 	int b;
 	int k;
