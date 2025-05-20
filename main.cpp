@@ -4,6 +4,8 @@
 #include "Cpower.h"
 
 #include <bits/stdc++.h>
+#include "Gori_func.h"
+
 using namespace std;
 
 #define MAX_ATTEMPT 10
@@ -22,9 +24,6 @@ bool insertLog(vector<Function *> f);
 
 /// TODO: implement funcitons
 
-bool insertPoly(vector<Function *> &f);
-bool insertPow(vector<Function *> &f);
-bool insertExp(vector<Function *> &f);
 
 
 /*
