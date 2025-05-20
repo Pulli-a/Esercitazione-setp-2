@@ -1,26 +1,19 @@
 #include "Gori_func.h"
+#include "safeInsert.h"
 
 
 bool insertPoly(vector<Function *> &f){
 	double* c;	//pointer to int array
     int d;		//degree
 	Polynomial* p;
-	cout<<"Polynomial Function creation wizard"<<endl;
-	while(1){
-		cout<<"insert function degree"<<endl;
-		cin>>d;
-		///TODO: LEVA QUESTA MERDA E METTICI SAFE INSERT QUESTO ROMPERà IL PROGRAMMA
-		if(d < 0){
-			cout<<"[ ERROR ] degree must be at least 0"<<endl;
-		}else{
-			break;
-		}
-	}
+	printf("\e[1;1H\e[2J");
+	cout<<"### Polynomial Function creation wizard###"<<endl;
+	cout<<"insert function degree"<<endl;
+	safeInsert(d, 0, GE);
 	c = new double[d + 1];
 	for(int i = 0; i < d +1; i++){
 		cout<<"insert coefficent of degree: "<<i<<endl;
-		///TODO: LEVA STO CIN E METTI SAFE INSERT
-		cin>>c[i];
+		safeInsert(c[i]);
 	}
 	
 	p = new Polynomial(c, d + 1);
@@ -32,12 +25,12 @@ bool insertPow(vector<Function *> &f){
 	double k;
 	double e;
 	Power* p;
-	
-	cout<<"Power Function creation wizard"<<endl;
+	printf("\e[1;1H\e[2J");
+	cout<<"### Power Function creation wizard ###"<<endl;
 	cout<<"insert k coefficent"<<endl;
-	cin>>k;
+	safeInsert(k);
 	cout<<"insert e coefficent"<<endl;
-	cin>>e;
+	safeInsert(e);
 	p = new Power(k, e);
 	f.push_back(p);
 	return true;
@@ -48,20 +41,14 @@ bool insertExp(vector<Function *> &f){
 	double b;
 	double c;
 	Exponential* e;
+	printf("\e[1;1H\e[2J");
+	cout<<"### Exponential Function creation wizard ###"<<endl;
 	cout<<"insert k coefficent"<<endl;
-	cin>>k;
+	safeInsert(k);
 	cout<<"insert c coefficent"<<endl;
-	cin>>c;
-	while(1){
-		cout<<"insert b coefficent"<<endl;
-		cin>>b;
-		if(b > 0){
-			break;
-		}
-		else{
-			cout<<"[ ERROR ] b coefficent must be > 0"<<endl;
-		}
-	}
+	safeInsert(c);
+	cout<<"insert b coefficent"<<endl;
+	safeInsert(b, 0, GT);
 	e = new Exponential(k, b ,c);
 	f.push_back(e);
 	return true;

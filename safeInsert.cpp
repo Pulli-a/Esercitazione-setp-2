@@ -13,13 +13,13 @@ bool safeInsert(int &value){
 		}
 		else if(sscanf(str, "%d%c", &value, &escape) !=1){
 			cout << "[ ERROR ] expectign an integer" << endl;
-			cout << "got '" << escape << "' character " << endl;
 			escape = '\0';
 		}
 		else{
 			return true;
 		}
 		try_count++;
+		cout << " [ INFO ] attempts left :  " << MAX_ATTEMPT - try_count << endl;
 	}
 	cout << "[ ERROR ] too many wrong attempts" << endl;
 	cout << "          MAX_ATTEMPT = " << MAX_ATTEMPT << endl;
@@ -38,7 +38,6 @@ bool safeInsert(double &value){
 		}
 		else if(sscanf(str, "%lf%c", &value, &escape) !=1){
 			cout << "[ ERROR ] expectign a double" << endl;
-			cout << "got '" << escape << "' character " << endl;
 			escape = '\0';
 		}
 		else{
@@ -83,7 +82,7 @@ bool safeInsert(double &value, double from, double to){
 
 bool safeInsert(int &value, int cond_value, condition C){
 	bool cond = true;
-	while(1){
+	do{
 		if(!safeInsert(value)) return false;
 		switch(C){
 			case GT:
@@ -102,12 +101,12 @@ bool safeInsert(int &value, int cond_value, condition C){
 			value <= cond_value ? cond = false : printf("[ ERROR ] value should be <= %d\n", cond_value);
 			break;
 		}
-	}
+	}while(cond);
 	return true;
 }
 	bool safeInsert(double &value, double cond_value , condition C){
-		bool cond = true;
-	while(1){
+	bool cond = true;
+	do{
 		if(!safeInsert(value)) return false;
 		switch(C){
 			case GT:
@@ -126,6 +125,6 @@ bool safeInsert(int &value, int cond_value, condition C){
 			value <= cond_value ? cond = false : printf("[ ERROR ] value should be <= %d\n", cond_value);
 			break;
 		}
-	}
+	}while(cond);
 	return true;
 	}

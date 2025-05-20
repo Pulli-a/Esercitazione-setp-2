@@ -1,8 +1,16 @@
+///TODO: add Interface.cpp and Interface.h
+///TODO: add doxygen comments to files
+///TODO: add doxygen comments to safeInsert.cpp
+///TODO: add try_count to safeInsert(range) and (cond) for both int and double
+///TODO: polish code and program
+
 #include "CPolynomial.h"
 #include "CExponential.h"
 #include "CLogarithmic.h"
 #include "Cpower.h"
+#include "safeInsert.h"
 
+#include "stdio.h"
 #include <bits/stdc++.h>
 #include "Gori_func.h"
 
@@ -17,7 +25,6 @@ bool eraseFunction(vector<Function *> &f);
 bool eraseAllFunctions(vector<Function *> &f);
 bool selectFuncion(vector<Function *> &f);
 
-int safeInsertion(int low, int high);
 int insertFunctionMenu();
 bool insertLog(vector<Function *> &f);
 
@@ -38,6 +45,8 @@ bool insertLog(vector<Function *> &f);
 5 – Seleziona una funzione  
 */
 
+/// @brief entry point of program
+/// @return 0 or non zero value if errors 
 int main(){
 	//initializing dinamic array
 	vector<Function *> F;
@@ -54,6 +63,8 @@ int main(){
 		
 		case 1:
 			printFunctionList(F);
+			cout << "(press enter to continue)" << endl;
+			getchar();
 			break;
 
 		case 2:
@@ -85,8 +96,7 @@ int main(){
 int menu(){
 	int mode = 0;
 	int try_num = 0;
-
-	///TODO: clear the screen and put menu on top using weird printf
+	printf("\e[1;1H\e[2J");
 	cout << "### main menu ###" << endl;
 	cout << "insert selection and press enter" << endl;
 	cout << "0 - Exit menu  and program" << endl;
@@ -95,7 +105,7 @@ int menu(){
 	cout << "3 - Erase a function" << endl;
 	cout << "4 - Erase all function" << endl;
 	cout << "5 - Select a function" << endl;
-	if((mode = safeInsertion(0 , 5)) == -1) return -1;
+	if(!safeInsert(mode, 0 , 5)) return -1;
 
 	return mode;
 }
@@ -112,7 +122,8 @@ function indexes
 
 */
 
-///@brief this function calls the function menu and selects the correct insert function to calloc
+///@brief allow to insert function to funciton pointer array f
+///@param f reference of pointers to class Functionion 
 ///@returns true if successful or false if fails.
 bool insertFunction(vector<Function *> &f){
 	int mode = 0;
@@ -147,11 +158,12 @@ bool insertFunction(vector<Function *> &f){
 
 
 ///@brief prints list of existing function objects
+///@param f reference of pointers to class Function
 ///@returns true if printed successfully or false if array is empty
 bool printFunctionList(vector<Function *> &f){
 	int size = f.size();
+	printf("\e[1;1H\e[2J");
 	cout << "### Function vector ###" << endl;
-	cout << size << endl;
 	if(f.empty()){
 		cout << endl << "[ INFO ] vector is empty " << endl << endl;
 		return false;
@@ -165,6 +177,7 @@ bool printFunctionList(vector<Function *> &f){
 	return true;
 }
 ///@brief deletes a specific function from the array
+///@param f reference of pointers to class Function
 ///@returns true if deleted successfully or false if failed. 
 bool eraseFunction(vector<Function *> &f){
 	int erase_index = 0;
@@ -172,14 +185,17 @@ bool eraseFunction(vector<Function *> &f){
 	if(!printFunctionList(f)){
 		return false;
 	}
-	if((erase_index = safeInsertion(0, max_index)) == -1 ) return false;
+	cout << "insert the index of function to delete" << endl;
+	if(!safeInsert(erase_index, 0, max_index-1)) return false;
 	delete f[erase_index];
+	f[erase_index] = NULL;
 	f.erase(f.begin() + erase_index);
 	
 	return true;
 }
 
 ///@brief deletes all objects from the array
+///@param f reference of pointers to class Function
 ///@returns true if deleted successfully or false if failed. 
 bool eraseAllFunctions(vector<Function *> &f){
 	cout << "[ INFO ] Erasing all functions in list" << endl;
@@ -195,25 +211,26 @@ bool eraseAllFunctions(vector<Function *> &f){
 }
 
 ///@brief logarithmic function creator
-///@param f pointer to object array
+///@param f reference of pointers to class Function
 ///@returns true if successful
 bool insertLog(vector<Function *> &f){
 	double b;
 	double k;
 	Logarithmic* l;
 	l = new Logarithmic;
-	cout<<"logarithmic function creation wizard"<<endl;
+	printf("\e[1;1H\e[2J");
+	cout<<"### logarithmic function creation wizard ###"<<endl;
 	while(1){
-		cout<<"insert base coefficent /nbase coefficent must be > 0 and not 1"<<endl;
-		cin>>b;
-		if(b > 0 && b != 1){
+		cout<<"insert base coefficent \nbase coefficent must be > 0 and not 1"<<endl;
+		safeInsert(b, 0 ,GT);
+		if(b != 1){
 			break;
 		}else{
-			cout<<"[ ERROR ] invalid b coefficent value"<<endl;
+			cout<<"[ ERROR ] b coefficent should be not equal to 1"<< endl;
 		}
 	}
 	cout<<"insert k coefficent"<<endl;
-	cin>>k;
+	safeInsert(k);
 	l->SetLogarithmic(b, k);
 	Function* func = l;
 	f.push_back(func);
@@ -223,16 +240,19 @@ bool insertLog(vector<Function *> &f){
 ///@returns selection 
 int insertFunctionMenu(){
 	int select;
+	printf("\e[1;1H\e[2J");
 	cout<<"### function creation wizard ###"<< endl;
 	cout<<"0 - return to main menu"<<endl;
 	cout<<"1 - create logarithmic function"<<endl;
 	cout<<"2 - create polynomial function"<<endl;
 	cout<<"3 - create power function"<<endl;
 	cout<<"4 - create exponential function"<<endl;
-	return safeInsertion(0, 4);
+	if(!safeInsert(select, 0, 4)) return -1;
+	return select;
 }
 
 ///@brief allows the user to pick a specific function from the object array
+///@param f reference of pointers to class Function
 ///@returns true if successful or false if fails
 bool selectFuncion(vector<Function *> &f){
 	int select_index = 0;
@@ -242,13 +262,16 @@ bool selectFuncion(vector<Function *> &f){
 	if(!printFunctionList(f)){
 		return false;
 	}
-	if((select_index = safeInsertion(0, max_index-1)) == -1 ) return false;
+	cout << "--- Select a function ---" << endl;
+	cout << "value should be between 0 and " << max_index - 1 << endl;
+	if(!safeInsert(select_index, 0, max_index-1)) return false;
 	while(1){
+		printf("\e[1;1H\e[2J");
 		cout << "### function selected ###" << endl;
 		f[select_index]->Dump();
 		cout << "0 - exit evaluation" << endl;
 		cout << "1 - evaluate funciton" << endl;
-		if((mode = safeInsertion(0 , 1)) == -1 ) return false;
+		if(!safeInsert(mode, 0 , 1)) return false;
 		cout << "###   ###" << endl;
 		switch(mode)
 		{
@@ -257,8 +280,10 @@ bool selectFuncion(vector<Function *> &f){
 
 		case 1:
 			cout << "insert evaluation point (x = )" << endl;
-			cin >> x;
+			safeInsert(x);
 			cout << "f("<< x << ") = " << f[select_index]->GetValue(x) << endl;
+			cout << "(press enter to continue)" << endl;
+			getchar();
 			break;
 		}
 	}
