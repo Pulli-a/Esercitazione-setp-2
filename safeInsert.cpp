@@ -1,6 +1,8 @@
 /*! @file safeInsert.cpp
 	@brief implementation of safeInsert.h functions 
 	@authors Alessandro Maryni & Mauro Gori
+
+	@note safeInsert uses ANSI escape codes
 */ 
 
 #include "safeInsert.h"
@@ -20,16 +22,16 @@ void safeInsert(){
 /// @return false in case of an error
 bool safeInsert(int &value ){
 	if(!scp){
-		printf("\e[s");
+		printf("\e[s"); // saves the cursor current position
 		scp = true;
 	}
 	char str[MAX_STRING_SIZE] = {0};
 	int try_count = 0;
 	char escape = '\0';
 	while(try_count < MAX_ATTEMPT){
-		printf("\e[u\e[2K");
+		printf("\e[u\e[2K"); // load curso to previous saved position
 		scanf("%[^\n]s", str);
-		printf("\e[J");
+		printf("\e[J"); // clear screen from cursor to end
 		getchar(); //gets the '\n' still in stdin buffer
 		if(strlen(str) == 0){
 			cout << "[ ERROR ] Input value is NULL" << endl;

@@ -10,7 +10,7 @@
 // ##################### MENU FUNCTIONS #####################
 
 /// @brief prints main menu and make the user choose the mode
-/// @return returns the  mode, integer from 0 to 5
+/// @return returns the  mode, integer from 0 to 5 in case of an error it returns -1 
 int menu(){
 	int mode = 0;
 	int try_num = 0;
@@ -109,7 +109,7 @@ bool insertLog(vector<Function *> &f){
 	return true;
 }
 
-///@brief polynomial function creation wizard
+///@brief polynomial function creator
 ///@param f reference of pointers to class Function
 ///@returns true if succesful
 ///@note inserts in the array of pointers the created function
@@ -144,7 +144,7 @@ bool insertPoly(vector<Function *> &f){
 	return true;
 }
 
-///@brief Power Function creation wizard
+///@brief Power function creator
 ///@param f reference of pointers to class Function
 ///@returns true if successful
 ///@note inserts in the array of pointers the created function
@@ -166,7 +166,7 @@ bool insertPow(vector<Function *> &f){
 	return true;
 }
 
-///@brief Exponential Function creation wizard
+///@brief Exponential function creator
 ///@param f reference of pointers to class Function
 ///@returns true if successful
 ///@note inserts in the array of pointers the created function
@@ -192,14 +192,23 @@ bool insertExp(vector<Function *> &f){
 	return true;
 }
 
+/// @brief asks to confirm the insertion of func Function pointer  in f Function pointers vector
+/// @param f reference of pointers to class Function
+/// @param func pointer to Function Class to insert
+/// @param func_name name of the functione. es "logarithm" ...
+/// @return true if successful
 bool final_insertion(vector<Function *> &f, Function* func, const char* func_name){
+	if(func == NULL){
+		cout << "[ ERROR ] passing a NULL func pointer" << endl;
+		return false;
+	}
 	int not_to_list = 0;
 	clrscr();
 	cout << "### final " << func_name << "###" << endl;
 	cout << "f(x) = ";
 	func->Dump();
 	cout << "add function to list?" << endl;
-	cout << "[y = 0 / N = 1]" << endl;
+	cout << "[Y = 0 / N = 1]" << endl;
 	safeInsert(not_to_list, 0 , 1);
 	if(not_to_list){
 		delete func;
@@ -210,7 +219,15 @@ bool final_insertion(vector<Function *> &f, Function* func, const char* func_nam
 	return true;
 }
 
+/// @brief asks to confirm for elimination of func Function pointer  in f Function pointers vector
+/// @param f eference of pointers to class Function
+/// @param erase_index index of function to remove form list
+/// @return true if succesful
 bool final_erase(vector<Function *> &f, int erase_index){
+	if(erase_index < 0 || erase_index > f.size()){
+		cout << "[ ERROR ] erase_index should be in range [0 , " << f.size() << "] got " << erase_index << endl;
+		return false; 
+	}
 	int dont_erase = 0;
 	clrscr();
 	cout << "### function erase ###" << endl;
