@@ -3,9 +3,10 @@
 	@authors Alessandro Maryni & Mauro gori
 
 	@mainpage Interface
-	This header contains the declaration of funtion needed to create \n
-	a vector of pointer to Function Classes (in CFuntion.h) and handlingg \n
+	This header contains the declaration of funtion needed to create and handle \n
+	a vector of pointer to Function Classes (in CFuntion.h) \n
 	En example is in main.cpp
+	@note This header depends on safeInsert.h and safeInsert.cpp on top of Function classes
 */ 
 
 #ifndef INTERFACE_H
